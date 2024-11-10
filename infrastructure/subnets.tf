@@ -1,49 +1,49 @@
-resource "aws_subnet" "private-us-east-1a" {
+resource "aws_subnet" "private_zone1" {
   vpc_id            = aws_vpc.main.id
-  cidr_block        = var.private_sub1
-  availability_zone = "us-east-1a"
+  cidr_block        = "10.0.0.0/19"
+  availability_zone = local.zone1
 
   tags = {
-    "Name"                                = "private-us-east-1a"
-    "kubernetes.io/role/internal-elb"     = "1"
-    "kubernetes.io/cluster/farmingassist" = "owned"
+    "Name"                                                 = "${local.env}-private-${local.zone1}"
+    "kubernetes.io/role/internal-elb"                      = "1"
+    "kubernetes.io/cluster/${local.env}-${local.eks_name}" = "owned"
   }
 }
 
-resource "aws_subnet" "private-us-east-1b" {
+resource "aws_subnet" "private_zone2" {
   vpc_id            = aws_vpc.main.id
-  cidr_block        = var.private_sub2
-  availability_zone = "us-east-1b"
+  cidr_block        = "10.0.32.0/19"
+  availability_zone = local.zone2
 
   tags = {
-    "Name"                                = "private-us-east-1b"
-    "kubernetes.io/role/internal-elb"     = "1"
-    "kubernetes.io/cluster/farmingassist" = "owned"
+    "Name"                                                 = "${local.env}-private-${local.zone2}"
+    "kubernetes.io/role/internal-elb"                      = "1"
+    "kubernetes.io/cluster/${local.env}-${local.eks_name}" = "owned"
   }
 }
 
-resource "aws_subnet" "public-us-east-1a" {
+resource "aws_subnet" "public_zone1" {
   vpc_id                  = aws_vpc.main.id
-  cidr_block              = var.public_sub1
-  availability_zone       = "us-east-1a"
+  cidr_block              = "10.0.64.0/19"
+  availability_zone       = local.zone1
   map_public_ip_on_launch = true
 
   tags = {
-    "Name"                                = "public-us-east-1a"
-    "kubernetes.io/role/elb"              = "1"
-    "kubernetes.io/cluster/farmingassist" = "owned"
+    "Name"                                                 = "${local.env}-public-${local.zone1}"
+    "kubernetes.io/role/elb"                               = "1"
+    "kubernetes.io/cluster/${local.env}-${local.eks_name}" = "owned"
   }
 }
 
-resource "aws_subnet" "public-us-east-1b" {
+resource "aws_subnet" "public_zone2" {
   vpc_id                  = aws_vpc.main.id
-  cidr_block              = var.public_sub2
-  availability_zone       = "us-east-1b"
+  cidr_block              = "10.0.96.0/19"
+  availability_zone       = local.zone2
   map_public_ip_on_launch = true
 
   tags = {
-    "Name"                                = "public-us-east-1b"
-    "kubernetes.io/role/elb"              = "1"
-    "kubernetes.io/cluster/farmingassist" = "owned"
+    "Name"                                                 = "${local.env}-public-${local.zone2}"
+    "kubernetes.io/role/elb"                               = "1"
+    "kubernetes.io/cluster/${local.env}-${local.eks_name}" = "owned"
   }
 }
