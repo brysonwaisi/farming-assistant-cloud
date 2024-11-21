@@ -1,0 +1,26 @@
+---
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: mongodb-external
+  namespace: mongodb
+spec:
+  isCA: false
+  duration: 2160h # 90d
+  renewBefore: 360h # 15d
+  dnsNames:
+  - my-mongodb-0.my-mongodb-svc.mongodb.svc.cluster.local
+  - my-mongodb-1.my-mongodb-svc.mongodb.svc.cluster.local
+  - my-mongodb-2.my-mongodb-svc.mongodb.svc.cluster.local
+  - my-mongodb-0.farming-assist.com
+  - my-mongodb-1.farming-assist.com
+  - my-mongodb-2.farming-assist.com
+  secretName: mongodb-external-key-pair
+  privateKey:
+    algorithm: RSA
+    encoding: PKCS1
+    size: 4096
+  issuerRef:
+    name: farming-assist.com-ca
+    kind: ClusterIssuer
+    group: cert-manager.io
